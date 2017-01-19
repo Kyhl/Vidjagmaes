@@ -22,14 +22,19 @@ var brickOffsetLeft;
 var bricks;
 var score;
 
+function randomIntFromInterval(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 function init(){
 mc=document.getElementById("myCanvas");
 ctx = mc.getContext("2d");
 x=mc.width/2;
 y=mc.height-30;
 ballRadius=10;
-dx=1;
-dy=-2;
+dx=randomIntFromInterval(-6,6);
+dy=-3;
 paddleHeight= 10;
 paddleWidth = 75;
 paddleX = (mc.width-paddleWidth)/2;
@@ -72,6 +77,7 @@ function collisionDetection(){
 }
 function draw() {
 	
+	if(dx>0 || dx<0){
 	ctx.clearRect(0,0,mc.width,mc.height);
 	drawBall();
 	drawPaddle();
@@ -96,12 +102,16 @@ function draw() {
 	y += dy;
 	
 	if(rightPressed){
-		paddleX += 2;
+		paddleX += 4;
 	}
 	else if(leftPressed){
-		paddleX -= 2;
+		paddleX -= 4;
 	}
 	drawScore();
+	}
+	else{
+		document.location.reload();
+	}
 }
 
 function drawBall(){
